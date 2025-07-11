@@ -35,7 +35,10 @@ function wordCount(str) {
   if (typeof str !== 'string') {
     throw new Error('Input must be a string');
   }
-  return str.trim().split(/\s+/).length;
+  
+  // Optimized for better performance - use single regex
+  const trimmed = str.trim();
+  return trimmed === '' ? 0 : trimmed.split(/\s+/).length;
 }
 
 module.exports = {
