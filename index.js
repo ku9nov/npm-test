@@ -1,13 +1,23 @@
 /**
  * Mathematical utility functions
  */
-function add(a, b) {
+function add(a, b, options = {}) {
   // Add input validation
   if (typeof a !== 'number' || typeof b !== 'number') {
     throw new Error('Both arguments must be numbers');
   }
   
-  return a + b;
+  // BREAKING CHANGE: The function now accepts an options parameter
+  // Old usage: add(1, 2)
+  // New usage: add(1, 2, { validate: true })
+  
+  const result = a + b;
+  
+  if (options.validate && result > Number.MAX_SAFE_INTEGER) {
+    throw new Error('Result exceeds safe integer limit');
+  }
+  
+  return result;
 }
 
 /**
