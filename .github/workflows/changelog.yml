@@ -12,7 +12,9 @@ jobs:
   update-changelog:
     if: |
       contains(github.event.pull_request.title, 'release') == true &&
-      github.event.pull_request.base.ref == 'main'
+      github.event.pull_request.base.ref == 'main' &&
+      !startsWith(github.event.pull_request.title, '📝 Update Changelog') &&
+      !contains(join(github.event.pull_request.labels.*.name), 'automated-pr')
     runs-on: ubuntu-latest
 
     steps:
@@ -79,3 +81,21 @@ jobs:
           gh pr merge --auto --merge "${{ steps.create-pr.outputs.pull-request-number }}"
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Delete changelog branch after merge
+        if: steps.generate.outputs.changes == 'true'
+        run: |
+            branch="update-changelog-${{ github.run_id }}"
+  
+            sleep 5
+  
+            pr_state=$(gh pr view "$branch" --json merged --jq '.merged')
+            if [ "$pr_state" = "true" ]; then
+              echo "✅ PR merged, deleting branch '$branch'"
+              git push origin --delete "$branch"
+            else
+              echo "⚠️ PR not merged yet. Skipping branch deletion."
+            fi
+          env:
+            GH_TOKEN: ${{ secrets.GH_PAT }}
+  
