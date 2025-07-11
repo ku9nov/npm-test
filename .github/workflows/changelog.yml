@@ -1,8 +1,8 @@
 name: "Update Changelog on Release PR"
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, edited]
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: write
@@ -11,9 +11,13 @@ permissions:
 jobs:
   update-changelog:
     if: |
-      contains(github.event.pull_request.title, 'release') == true &&
-      github.event.pull_request.base.ref == 'main' &&
-      !contains(join(github.event.pull_request.labels.*.name), 'automated-pr')
+      github.event.issue.pull_request != null &&
+      contains(github.event.comment.body, 'changelog') &&
+      (
+        github.event.comment.author_association == 'OWNER' ||
+        github.event.comment.author_association == 'MEMBER' ||
+        github.event.comment.author_association == 'COLLABORATOR'
+      )
     runs-on: ubuntu-latest
 
     steps:
@@ -23,13 +27,15 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Extract version from PR title
-        id: version
+      - name: Extract version from comment
+        id: extract
         run: |
-            title="${{ github.event.pull_request.title }}"
-            version=$(echo "$title" | grep -oP '\d+\.\d+\.\d+')
+            comment="${{ github.event.comment.body }}"
+            version=$(echo "$comment" | grep -oP 'changelog\s+\K[0-9]+\.[0-9]+\.[0-9]+')
+            echo "Comment: $comment"
+            echo "Extracted version: $version"
             if [ -z "$version" ]; then
-              echo "❌ Version not found in PR title"
+              echo "❌ No version found in comment"
               exit 1
             fi
             echo "version=$version" >> $GITHUB_OUTPUT
@@ -62,7 +68,7 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GH_PAT }}
-          commit-message: "[skip ci]: update CHANGELOG.md"
+          commit-message: "docs: update CHANGELOG.md"
           title: "📝 Update Changelog"
           body: |
             This PR updates the CHANGELOG.md.
