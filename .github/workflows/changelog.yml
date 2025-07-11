@@ -11,10 +11,15 @@ permissions:
 jobs:
   update-changelog:
     if: |
-      contains(github.event.pull_request.title, 'release') == true &&
-      github.event.pull_request.base.ref == 'main' &&
-      !contains(join(github.event.pull_request.labels.*.name), 'automated-pr') &&
-      !contains(toJSON(github.event.head_commit.message), 'Merge pull request ')
+      (
+        contains(github.event.pull_request.title, 'release') &&
+        github.event.pull_request.base.ref == 'main' &&
+        !contains(join(github.event.pull_request.labels.*.name), 'automated-pr')
+      ) || (
+        github.event_name == 'push' &&
+        !contains(toJSON(github.event.head_commit.message), 'Merge pull request ')
+      )
+
     runs-on: ubuntu-latest
 
     steps:
