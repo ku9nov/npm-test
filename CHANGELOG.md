@@ -10,6 +10,8 @@
 - add input validation to add function
 
 ### Chores
+- add 'check lsat commit' to workflows
+- update CHANGELOG.md
 - update CHANGELOG.md
 - update CHANGELOG.md
 - update CHANGELOG.md
