@@ -11,6 +11,7 @@
 
 ### Chores
 - update CHANGELOG.md
+- update CHANGELOG.md
 - update github workflow
 - update CHANGELOG.md
 - update CHANGELOG.md
