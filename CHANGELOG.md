@@ -1,15 +1,48 @@
-## 0.0.4
+<a name="unreleased"></a>
+## [Unreleased]
 
-release.
+### Bug Fixes
+- add input validation to add function
 
-## 0.0.3
+### Chores
+- add git-chglog configuration
 
-Third release.
+### Code Refactoring
+- improve code structure and organization
 
-## 0.0.2
+### Code Style
+- improve code formatting and consistency
 
-Second release.
+### Documentation
+- add comprehensive README documentation
 
-## 0.0.1
+### Features
+- add options parameter to add function
+- add formatGreeting utility function
+- **math:** add multiply function for mathematical operations
 
-Initial release.
+### Performance Improvements
+- optimize formatGreeting with trim() for better performance
+
+### Tests
+- add tests for formatGreeting function
+
+### BREAKING CHANGE
+
+The add function now accepts an optional options parameter.
+Old usage: add(1, 2)
+New usage: add(1, 2, { validate: true })
+
+
+<a name="0.0.4"></a>
+## [0.0.4] - 2025-02-18
+
+<a name="0.0.3"></a>
+## [0.0.3] - 2025-02-18
+
+<a name="0.0.2"></a>
+## 0.0.2 - 2025-02-18
+
+[Unreleased]: https://github.com/ku9nov/npm-test/compare/0.0.4...HEAD
+[0.0.4]: https://github.com/ku9nov/npm-test/compare/0.0.3...0.0.4
+[0.0.3]: https://github.com/ku9nov/npm-test/compare/0.0.2...0.0.3

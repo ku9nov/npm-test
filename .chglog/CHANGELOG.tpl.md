@@ -10,6 +10,15 @@
 {{ end }}
 {{ end -}}
 {{ end -}}
+
+{{- if .Unreleased.NoteGroups -}}
+{{ range .Unreleased.NoteGroups -}}
+### {{ .Title }}
+{{ range .Notes }}
+{{ .Body }}
+{{ end }}
+{{ end -}}
+{{ end -}}
 {{ end -}}
 
 {{ range .Versions }}
