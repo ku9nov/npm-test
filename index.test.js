@@ -1,4 +1,4 @@
-const { add, formatGreeting, multiply, power } = require('./index');
+const { add, formatGreeting, multiply, power, helloWorld } = require('./index');
 
 test('helloWorld should print "Hello, world!"', () => {
   console.log = jest.fn(); 
@@ -18,8 +18,8 @@ test('multiply should return product of two numbers', () => {
 });
 
 test('multiply should throw error for non-numbers', () => {
-  expect(() => multiply('2', 3)).toThrow('Both arguments must be numbers');
-  expect(() => multiply(2, '3')).toThrow('Both arguments must be numbers');
+  expect(() => multiply('2', 3)).toThrow('All arguments must be numbers');
+  expect(() => multiply(2, '3')).toThrow('All arguments must be numbers');
 });
 
 test('power should return base raised to exponent', () => {
@@ -29,6 +29,10 @@ test('power should return base raised to exponent', () => {
 });
 
 test('power should throw error for non-numbers', () => {
-  expect(() => power('2', 3)).toThrow('Both arguments must be numbers');
-  expect(() => power(2, '3')).toThrow('Both arguments must be numbers');
+  expect(() => power('2', 3)).toThrow('All arguments must be numbers');
+  expect(() => power(2, '3')).toThrow('All arguments must be numbers');
+});
+
+test('power should throw error for zero to negative power', () => {
+  expect(() => power(0, -1)).toThrow('Cannot raise 0 to a negative power');
 });
