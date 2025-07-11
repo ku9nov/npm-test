@@ -10,6 +10,7 @@
 - add input validation to add function
 
 ### Chores
+- next condition try
 - add new condition to github workflow
 - update CHANGELOG.md
 - update CHANGELOG.md
@@ -55,6 +56,7 @@
 - improve code formatting and consistency
 
 ### Documentation
+- update CHANGELOG.md
 - update CHANGELOG.md
 - update CHANGELOG.md
 - update CHANGELOG.md
