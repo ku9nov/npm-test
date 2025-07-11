@@ -96,6 +96,6 @@ jobs:
             else
               echo "⚠️ PR not merged yet. Skipping branch deletion."
             fi
-          env:
+        env:
             GH_TOKEN: ${{ secrets.GH_PAT }}
   
