@@ -11,15 +11,9 @@ permissions:
 jobs:
   update-changelog:
     if: |
-      (
-        contains(github.event.pull_request.title, 'release') &&
-        github.event.pull_request.base.ref == 'main' &&
-        !contains(join(github.event.pull_request.labels.*.name), 'automated-pr')
-      ) || (
-        github.event_name == 'push' &&
-        !contains(toJSON(github.event.head_commit.message), 'Merge pull request ')
-      )
-
+      contains(github.event.pull_request.title, 'release') == true &&
+      github.event.pull_request.base.ref == 'main' &&
+      !contains(join(github.event.pull_request.labels.*.name), 'automated-pr')
     runs-on: ubuntu-latest
 
     steps:
@@ -83,7 +77,7 @@ jobs:
       - name: Enable Auto-merge
         if: steps.generate.outputs.changes == 'true'
         run: |
-          gh pr merge --auto --merge "${{ steps.create-pr.outputs.pull-request-number }}"
+          gh pr merge --auto --squash "${{ steps.create-pr.outputs.pull-request-number }}"
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
 
