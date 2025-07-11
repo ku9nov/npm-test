@@ -25,15 +25,19 @@ jobs:
 
       - name: Check last commit message for auto-branch pattern
         id: check_commit
+        env:
+          RUN_ID: ${{ github.run_id }}
         run: |
-          last_commit_msg=$(git log -1 --pretty=%B)
-          echo "Last commit message: $last_commit_msg"
-          branch_pattern="update-changelog-${{ github.run_id }}"
-          if echo "$last_commit_msg" | grep -q "$branch_pattern"; then
-            echo "skip=true" >> $GITHUB_OUTPUT
-          else
-            echo "skip=false" >> $GITHUB_OUTPUT
-          fi
+            last_commit_msg=$(git log -1 --pretty=%B)
+            echo "Last commit message: $last_commit_msg"
+            branch_pattern="update-changelog-$RUN_ID"
+            if echo "$last_commit_msg" | grep -q "$branch_pattern"; then
+              echo "skip=true" >> $GITHUB_OUTPUT
+              echo "⚠️ Skipping changelog update because last commit is from automated branch: $branch_pattern"
+            else
+              echo "skip=false" >> $GITHUB_OUTPUT
+              echo "✅ Proceeding with changelog update"
+            fi
 
       - name: Extract version from PR title
         id: version
