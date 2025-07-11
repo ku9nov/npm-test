@@ -10,6 +10,8 @@
 - add input validation to add function
 
 ### Chores
+- add new condition to github workflow
+- update CHANGELOG.md
 - update CHANGELOG.md
 - update CHANGELOG.md
 - update last commit message
