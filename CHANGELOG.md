@@ -10,6 +10,7 @@
 - add input validation to add function
 
 ### Chores
+- update CHANGELOG.md
 - add github PAT to secrets
 - update actions to first release test
 - update github action for changelog feature
