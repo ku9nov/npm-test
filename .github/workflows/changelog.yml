@@ -13,7 +13,8 @@ jobs:
     if: |
       contains(github.event.pull_request.title, 'release') == true &&
       github.event.pull_request.base.ref == 'main' &&
-      !contains(join(github.event.pull_request.labels.*.name), 'automated-pr')
+      !contains(join(github.event.pull_request.labels.*.name), 'automated-pr') &&
+      !contains(toJSON(github.event.head_commit.message), 'Merge pull request ')
     runs-on: ubuntu-latest
 
     steps:
@@ -23,36 +24,19 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Check last commit message for auto-branch pattern
-        id: check_commit
-        env:
-          RUN_ID: ${{ github.run_id }}
-        run: |
-            last_commit_msg=$(git log -1 --pretty=%B)
-            echo "Last commit message: $last_commit_msg"
-            branch_pattern="update-changelog-$RUN_ID"
-            if echo "$last_commit_msg" | grep -q "$branch_pattern"; then
-              echo "skip=true" >> $GITHUB_OUTPUT
-              echo "⚠️ Skipping changelog update because last commit is from automated branch: $branch_pattern"
-            else
-              echo "skip=false" >> $GITHUB_OUTPUT
-              echo "✅ Proceeding with changelog update"
-            fi
-
       - name: Extract version from PR title
         id: version
-        if: steps.check_commit.outputs.skip != 'true'
         run: |
-          title="${{ github.event.pull_request.title }}"
-          version=$(echo "$title" | grep -oP '\d+\.\d+\.\d+')
-          if [ -z "$version" ]; then
-            echo "❌ Version not found in PR title"
-            exit 1
-          fi
-          echo "version=$version" >> $GITHUB_OUTPUT
+            title="${{ github.event.pull_request.title }}"
+            version=$(echo "$title" | grep -oP '\d+\.\d+\.\d+')
+            if [ -z "$version" ]; then
+              echo "❌ Version not found in PR title"
+              exit 1
+            fi
+            echo "version=$version" >> $GITHUB_OUTPUT
+        
 
       - name: Setup git-chglog
-        if: steps.check_commit.outputs.skip != 'true'
         run: |
           CHGLOG_VERSION="0.15.4"
           curl -sSL "https://github.com/git-chglog/git-chglog/releases/download/v${CHGLOG_VERSION}/git-chglog_${CHGLOG_VERSION}_linux_amd64.tar.gz" | tar -xz
@@ -60,7 +44,6 @@ jobs:
 
       - name: Generate CHANGELOG.md
         id: generate
-        if: steps.check_commit.outputs.skip != 'true'
         run: |
           ./git-chglog --next-tag ${{ steps.version.outputs.version }} -o CHANGELOG.md
           if git diff --quiet CHANGELOG.md; then
@@ -72,16 +55,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cleanup
-        if: steps.check_commit.outputs.skip != 'true'
         run: rm git-chglog
+        if: always()
 
       - name: Create Pull Request
-        if: steps.generate.outputs.changes == 'true' && steps.check_commit.outputs.skip != 'true'
+        if: steps.generate.outputs.changes == 'true'
         uses: peter-evans/create-pull-request@v4
-        id: create-pr
         with:
           token: ${{ secrets.GH_PAT }}
-          commit-message: "chore: update CHANGELOG.md"
+          commit-message: "docs: update CHANGELOG.md"
           title: "📝 Update Changelog"
           body: |
             This PR updates the CHANGELOG.md.
@@ -94,23 +76,26 @@ jobs:
           labels: documentation, automated-pr
 
       - name: Enable Auto-merge
-        if: steps.generate.outputs.changes == 'true' && steps.check_commit.outputs.skip != 'true'
+        if: steps.generate.outputs.changes == 'true'
         run: |
           gh pr merge --auto --merge "${{ steps.create-pr.outputs.pull-request-number }}"
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Delete changelog branch after merge
-        if: steps.generate.outputs.changes == 'true' && steps.check_commit.outputs.skip != 'true'
+        if: steps.generate.outputs.changes == 'true'
         run: |
-          branch="update-changelog-${{ github.run_id }}"
-          sleep 5
-          pr_state=$(gh pr view "$branch" --json state --jq '.state')
-          if [ "$pr_state" = "MERGED" ]; then
-            echo "✅ PR merged, deleting branch '$branch'"
-            git push origin --delete "$branch"
-          else
-            echo "⚠️ PR state is '$pr_state'. Skipping branch deletion."
-          fi
+            branch="update-changelog-${{ github.run_id }}"
+  
+            sleep 5
+  
+            pr_state=$(gh pr view "$branch" --json state --jq '.state')
+
+            if [ "$pr_state" = "MERGED" ]; then
+              echo "✅ PR merged, deleting branch '$branch'"
+              git push origin --delete "$branch"
+            else
+              echo "⚠️ PR state is '$pr_state'. Skipping branch deletion."
+            fi
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+            GH_TOKEN: ${{ secrets.GH_PAT }}
