@@ -6,6 +6,7 @@ function add(a, b) {
   if (typeof a !== 'number' || typeof b !== 'number') {
     throw new Error('Both arguments must be numbers');
   }
+  
   return a + b;
 }
 
@@ -21,14 +22,14 @@ function formatGreeting(name) {
  * Main application function
  */
 function helloWorld() {
-  console.log("Hello, world!");
+  console.log('Hello, world!');
 }
 
 // Export all functions
 module.exports = {
   add,
   formatGreeting,
-  helloWorld
+  helloWorld,
 };
 
 // Run main function if this file is executed directly
