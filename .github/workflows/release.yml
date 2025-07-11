@@ -17,12 +17,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Extract Version
-        id: extract-version
+      - name: Extract version from PR title
+        id: version
         run: |
-          # Use grep to find the first occurrence of the version number matching "## 0.0.0" pattern
-          version=$(grep -m 1 -oP '## \d+\.\d+\.\d+' CHANGELOG.md | cut -d ' ' -f 2)
-          echo "version=$version" >> $GITHUB_ENV
+            title="${{ github.event.pull_request.title }}"
+            version=$(echo "$title" | grep -oP '\d+\.\d+\.\d+')
+            if [ -z "$version" ]; then
+              echo "❌ Version not found in PR title"
+              exit 1
+            fi
+            echo "version=$version" >> $GITHUB_ENV
 
       - name: Extract Changelog
         id: extract-changelog
