@@ -8,7 +8,8 @@ function helloWorld() {
  * @returns {string} Formatted greeting message
  */
 function formatGreeting(name) {
-  return `Hello, ${name}! Welcome to our application.`;
+  // Optimized for better performance
+  return `Hello, ${name.trim()}! Welcome to our application.`;
 }
 
 function add(a, b) {
