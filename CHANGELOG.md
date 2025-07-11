@@ -55,6 +55,7 @@
 - improve code formatting and consistency
 
 ### Documentation
+- update CHANGELOG.md
 - update README with comprehensive API documentation
 - add comprehensive README documentation
 
