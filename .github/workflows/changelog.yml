@@ -43,7 +43,7 @@ jobs:
       - name: Generate CHANGELOG.md
         id: generate
         run: |
-          ./git-chglog ..${{ steps.version.outputs.version }} -o CHANGELOG.md
+          ./git-chglog --next-tag ${{ steps.version.outputs.version }} -o CHANGELOG.md
           if git diff --quiet CHANGELOG.md; then
             echo "changes=false" >> $GITHUB_OUTPUT
           else
