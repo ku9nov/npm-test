@@ -89,12 +89,13 @@ jobs:
   
             sleep 5
   
-            pr_state=$(gh pr view "$branch" --json merged --jq '.merged')
-            if [ "$pr_state" = "true" ]; then
+            pr_state=$(gh pr view "$branch" --json state --jq '.state')
+
+            if [ "$pr_state" = "MERGED" ]; then
               echo "✅ PR merged, deleting branch '$branch'"
               git push origin --delete "$branch"
             else
-              echo "⚠️ PR not merged yet. Skipping branch deletion."
+              echo "⚠️ PR state is '$pr_state'. Skipping branch deletion."
             fi
         env:
             GH_TOKEN: ${{ secrets.GH_PAT }}
