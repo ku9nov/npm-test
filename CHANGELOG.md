@@ -10,6 +10,7 @@
 - add input validation to add function
 
 ### Chores
+- update CHANGELOG.md
 - fix github actions
 - update github actions condition
 - update CHANGELOG.md
