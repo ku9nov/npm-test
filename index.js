@@ -1,11 +1,22 @@
 /**
  * Mathematical utility functions
  */
-function add(a, b, options = {}) {
-  // Add input validation
-  if (typeof a !== 'number' || typeof b !== 'number') {
-    throw new Error('Both arguments must be numbers');
+
+/**
+ * Validate that all arguments are numbers
+ * @param {...number} args - Arguments to validate
+ * @throws {Error} If any argument is not a number
+ */
+function validateNumbers(...args) {
+  for (const arg of args) {
+    if (typeof arg !== 'number') {
+      throw new Error('All arguments must be numbers');
+    }
   }
+}
+
+function add(a, b, options = {}) {
+  validateNumbers(a, b);
   
   // BREAKING CHANGE: The function now accepts an options parameter
   // Old usage: add(1, 2)
@@ -20,17 +31,20 @@ function add(a, b, options = {}) {
   return result;
 }
 
-/**
- * Multiply two numbers
- * @param {number} a - First number
- * @param {number} b - Second number
- * @returns {number} Product of a and b
- */
 function multiply(a, b) {
-  if (typeof a !== 'number' || typeof b !== 'number') {
-    throw new Error('Both arguments must be numbers');
-  }
+  validateNumbers(a, b);
   return a * b;
+}
+
+function power(base, exponent) {
+  validateNumbers(base, exponent);
+  
+  // Handle edge cases
+  if (exponent < 0 && base === 0) {
+    throw new Error('Cannot raise 0 to a negative power');
+  }
+  
+  return Math.pow(base, exponent);
 }
 
 /**
@@ -54,6 +68,7 @@ module.exports = {
   formatGreeting,
   helloWorld,
   multiply,
+  power,
 };
 
 // Run main function if this file is executed directly

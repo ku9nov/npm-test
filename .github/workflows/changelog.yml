@@ -12,7 +12,8 @@ jobs:
   update-changelog:
     if: |
       contains(github.event.pull_request.title, 'release') == true &&
-      github.event.pull_request.base.ref == 'main'
+      github.event.pull_request.base.ref == 'main' &&
+      !contains(join(github.event.pull_request.labels.*.name), 'automated-pr')
     runs-on: ubuntu-latest
 
     steps:
@@ -43,7 +44,7 @@ jobs:
       - name: Generate CHANGELOG.md
         id: generate
         run: |
-          ./git-chglog ..${{ steps.version.outputs.version }} -o CHANGELOG.md
+          ./git-chglog --next-tag ${{ steps.version.outputs.version }} -o CHANGELOG.md
           if git diff --quiet CHANGELOG.md; then
             echo "changes=false" >> $GITHUB_OUTPUT
           else
@@ -60,8 +61,8 @@ jobs:
         if: steps.generate.outputs.changes == 'true'
         uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: update CHANGELOG.md"
+          token: ${{ secrets.GH_PAT }}
+          commit-message: "[skip ci]: update CHANGELOG.md"
           title: "📝 Update Changelog"
           body: |
             This PR updates the CHANGELOG.md.
@@ -76,6 +77,24 @@ jobs:
       - name: Enable Auto-merge
         if: steps.generate.outputs.changes == 'true'
         run: |
-          gh pr merge --auto --merge "${{ steps.create-pr.outputs.pull-request-number }}"
+          gh pr merge --auto --squash "${{ steps.create-pr.outputs.pull-request-number }}"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Delete changelog branch after merge
+        if: steps.generate.outputs.changes == 'true'
+        run: |
+            branch="update-changelog-${{ github.run_id }}"
+  
+            sleep 5
+  
+            pr_state=$(gh pr view "$branch" --json state --jq '.state')
+
+            if [ "$pr_state" = "MERGED" ]; then
+              echo "✅ PR merged, deleting branch '$branch'"
+              git push origin --delete "$branch"
+            else
+              echo "⚠️ PR state is '$pr_state'. Skipping branch deletion."
+            fi
+        env:
+            GH_TOKEN: ${{ secrets.GH_PAT }}
