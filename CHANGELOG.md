@@ -57,6 +57,7 @@
 - improve code formatting and consistency
 
 ### Documentation
+- update CHANGELOG.md ([#36](https://github.com/ku9nov/npm-test/issues/36))
 - update CHANGELOG.md
 - update CHANGELOG.md
 - update CHANGELOG.md
