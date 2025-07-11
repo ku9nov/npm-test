@@ -11,6 +11,7 @@
 
 ### Chores
 - update CHANGELOG.md
+- update CHANGELOG.md
 - update last commit message
 - update CHANGELOG.md
 - update CHANGELOG.md
