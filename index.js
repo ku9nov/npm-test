@@ -34,6 +34,19 @@ function multiply(a, b) {
 }
 
 /**
+ * Calculate the power of a number
+ * @param {number} base - The base number
+ * @param {number} exponent - The exponent
+ * @returns {number} The result of base raised to the power of exponent
+ */
+function power(base, exponent) {
+  if (typeof base !== 'number' || typeof exponent !== 'number') {
+    throw new Error('Both arguments must be numbers');
+  }
+  return Math.pow(base, exponent);
+}
+
+/**
  * String utility functions
  */
 function formatGreeting(name) {
@@ -54,6 +67,7 @@ module.exports = {
   formatGreeting,
   helloWorld,
   multiply,
+  power,
 };
 
 // Run main function if this file is executed directly
