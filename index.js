@@ -21,6 +21,19 @@ function add(a, b, options = {}) {
 }
 
 /**
+ * Multiply two numbers
+ * @param {number} a - First number
+ * @param {number} b - Second number
+ * @returns {number} Product of a and b
+ */
+function multiply(a, b) {
+  if (typeof a !== 'number' || typeof b !== 'number') {
+    throw new Error('Both arguments must be numbers');
+  }
+  return a * b;
+}
+
+/**
  * String utility functions
  */
 function formatGreeting(name) {
@@ -40,6 +53,7 @@ module.exports = {
   add,
   formatGreeting,
   helloWorld,
+  multiply,
 };
 
 // Run main function if this file is executed directly
