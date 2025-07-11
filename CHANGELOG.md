@@ -56,6 +56,7 @@
 
 ### Documentation
 - update CHANGELOG.md
+- update CHANGELOG.md
 - update README with comprehensive API documentation
 - add comprehensive README documentation
 
