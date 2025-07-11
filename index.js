@@ -43,6 +43,12 @@ function power(base, exponent) {
   if (typeof base !== 'number' || typeof exponent !== 'number') {
     throw new Error('Both arguments must be numbers');
   }
+  
+  // Handle edge cases
+  if (exponent < 0 && base === 0) {
+    throw new Error('Cannot raise 0 to a negative power');
+  }
+  
   return Math.pow(base, exponent);
 }
 
