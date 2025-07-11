@@ -60,7 +60,7 @@ jobs:
         if: steps.generate.outputs.changes == 'true'
         uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT }}
           commit-message: "chore: update CHANGELOG.md"
           title: "📝 Update Changelog"
           body: |
@@ -78,4 +78,4 @@ jobs:
         run: |
           gh pr merge --auto --merge "${{ steps.create-pr.outputs.pull-request-number }}"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
