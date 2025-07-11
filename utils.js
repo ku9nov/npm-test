@@ -25,7 +25,10 @@ function reverse(str) {
     throw new Error('Input must be a string');
   }
   
-  return str.split('').reverse().join('');
+  // BREAKING CHANGE: Now properly handles Unicode characters
+  // Old behavior: split('') could break Unicode characters
+  // New behavior: uses Array.from() for proper Unicode support
+  return Array.from(str).reverse().join('');
 }
 
 /**
