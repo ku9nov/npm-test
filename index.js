@@ -11,6 +11,14 @@ function formatGreeting(name) {
   return `Hello, ${name}! Welcome to our application.`;
 }
 
+function add(a, b) {
+  // Add input validation
+  if (typeof a !== 'number' || typeof b !== 'number') {
+    throw new Error('Both arguments must be numbers');
+  }
+  return a + b;
+}
+
 module.exports = {
   add,
   formatGreeting
