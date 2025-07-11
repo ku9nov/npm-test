@@ -12,6 +12,7 @@
 ### Chores
 - update CHANGELOG.md
 - update CHANGELOG.md
+- update CHANGELOG.md
 - add 'check lsat commit' to workflows
 - update CHANGELOG.md
 - update CHANGELOG.md
