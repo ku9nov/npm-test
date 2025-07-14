@@ -1,19 +1,34 @@
 name: "Update Changelog on Release PR"
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, edited]
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug event
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Comment body: ${{ github.event.comment.body }}"
+          echo "Issue has PR: ${{ github.event.issue.pull_request != null }}"
+          echo "Author association: ${{ github.event.comment.author_association }}"
+          echo "Contains changelog: ${{ contains(github.event.comment.body, '/changelog') }}"
+
   update-changelog:
     if: |
-      contains(github.event.pull_request.title, 'release') == true &&
-      github.event.pull_request.base.ref == 'main' &&
-      !contains(join(github.event.pull_request.labels.*.name), 'automated-pr')
+      github.event.issue.pull_request != null &&
+      contains(github.event.comment.body, '/changelog') &&
+      (
+        github.event.comment.author_association == 'OWNER' ||
+        github.event.comment.author_association == 'MEMBER' ||
+        github.event.comment.author_association == 'COLLABORATOR'
+      )
     runs-on: ubuntu-latest
 
     steps:
@@ -58,11 +73,12 @@ jobs:
         if: always()
 
       - name: Create Pull Request
+        id: create-pr
         if: steps.generate.outputs.changes == 'true'
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GH_PAT }}
-          commit-message: "[skip ci]: update CHANGELOG.md"
+          commit-message: "docs: update CHANGELOG.md"
           title: "📝 Update Changelog"
           body: |
             This PR updates the CHANGELOG.md.
