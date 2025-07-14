@@ -19,7 +19,20 @@ jobs:
           echo "Issue has PR: ${{ github.event.issue.pull_request != null }}"
           echo "Author association: ${{ github.event.comment.author_association }}"
           echo "Contains changelog: ${{ contains(github.event.comment.body, '/changelog') }}"
-
+          
+          # Get PR information via API
+          if [ "${{ github.event.issue.pull_request != null }}" = "true" ]; then
+            PR_NUMBER="${{ github.event.issue.number }}"
+            PR_INFO=$(gh api repos/${{ github.repository }}/pulls/$PR_NUMBER)
+            echo "PR title: $(echo "$PR_INFO" | jq -r '.title')"
+            echo "PR base ref: $(echo "$PR_INFO" | jq -r '.base.ref')"
+            echo "PR head ref: $(echo "$PR_INFO" | jq -r '.head.ref')"
+            echo "PR state: $(echo "$PR_INFO" | jq -r '.state')"
+          else
+            echo "No PR associated with this issue"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
   update-changelog:
     if: |
       github.event.issue.pull_request != null &&
@@ -32,17 +45,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get PR information
+        id: pr_info
+        run: |
+          PR_NUMBER="${{ github.event.issue.number }}"
+          PR_INFO=$(gh api repos/${{ github.repository }}/pulls/$PR_NUMBER)
+          
+          # Check if PR exists and is open
+          PR_STATE=$(echo "$PR_INFO" | jq -r '.state')
+          if [ "$PR_STATE" != "open" ]; then
+            echo "❌ PR is not open (state: $PR_STATE)"
+            exit 1
+          fi
+          
+          echo "pr_title=$(echo "$PR_INFO" | jq -r '.title')" >> $GITHUB_OUTPUT
+          echo "pr_base_ref=$(echo "$PR_INFO" | jq -r '.base.ref')" >> $GITHUB_OUTPUT
+          echo "pr_head_ref=$(echo "$PR_INFO" | jq -r '.head.ref')" >> $GITHUB_OUTPUT
+          echo "pr_state=$PR_STATE" >> $GITHUB_OUTPUT
+          
+          echo "✅ PR found: $(echo "$PR_INFO" | jq -r '.title')"
+          echo "   Base ref: $(echo "$PR_INFO" | jq -r '.base.ref')"
+          echo "   Head ref: $(echo "$PR_INFO" | jq -r '.head.ref')"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ steps.pr_info.outputs.pr_head_ref }}
 
-      - name: Extract version from PR title
+      - name: Extract version from PR comment
         id: version
         run: |
-            title="${{ github.event.pull_request.title }}"
-            version=$(echo "$title" | grep -oP '\d+\.\d+\.\d+')
+            comment="${{ github.event.comment.body }}"
+            version=$(echo "$comment" | grep -oP '/changelog\s+\K[0-9]+\.[0-9]+\.[0-9]+')
+            echo "Comment: $comment"
+            echo "Extracted version: $version"
             if [ -z "$version" ]; then
               echo "❌ Version not found in PR title"
               exit 1
@@ -73,8 +112,8 @@ jobs:
         if: always()
 
       - name: Create Pull Request
-        id: create-pr
         if: steps.generate.outputs.changes == 'true'
+        id: create-pr
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GH_PAT }}
@@ -86,7 +125,7 @@ jobs:
             - Triggered by: release PR
             - Auto-merge enabled
           branch: update-changelog-${{ github.run_id }}
-          base: ${{ github.event.pull_request.head.ref }}
+          base: ${{ steps.pr_info.outputs.pr_head_ref }}
           delete-branch: true
           labels: documentation, automated-pr
 

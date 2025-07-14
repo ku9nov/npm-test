@@ -1,13 +1,6 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
-
-<a name="2.0.2"></a>
-## 2.0.2
-### Documentation
-- update docs
-
-
 <a name="2.0.1"></a>
 ## 2.0.1
 ### Bug Fixes
@@ -69,9 +62,7 @@
 - improve code formatting and consistency
 
 ### Documentation
-- update docs ([#42](https://github.com/ku9nov/npm-test/issues/42))
-- update CHANGELOG.md ([#44](https://github.com/ku9nov/npm-test/issues/44))
-- update CHANGELOG.md ([#43](https://github.com/ku9nov/npm-test/issues/43))
+- update docs
 - update CHANGELOG.md ([#39](https://github.com/ku9nov/npm-test/issues/39))
 - update CHANGELOG.md ([#38](https://github.com/ku9nov/npm-test/issues/38))
 - update CHANGELOG.md ([#37](https://github.com/ku9nov/npm-test/issues/37))
@@ -125,6 +116,7 @@ New usage: add(1, 2, { validate: true })
 
 [Unreleased]: https://github.com/ku9nov/npm-test/compare/2.0.2...HEAD
 [2.0.2]: https://github.com/ku9nov/npm-test/compare/2.0.1...2.0.2
+
 [2.0.1]: https://github.com/ku9nov/npm-test/compare/0.0.4...2.0.1
 [0.0.4]: https://github.com/ku9nov/npm-test/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/ku9nov/npm-test/compare/0.0.2...0.0.3
