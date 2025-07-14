@@ -3,113 +3,26 @@ name: "Update Changelog on Release PR"
 on:
   issue_comment:
     types: [created]
-  pull_request_review_comment:
-    types: [created]
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  update-changelog-issue-comment:
-    if: |
-      github.event_name == 'issue_comment' &&
-      github.event.issue.pull_request != null &&
-      contains(github.event.comment.body, '/changelog') &&
-      (
-        github.event.comment.author_association == 'OWNER' ||
-        github.event.comment.author_association == 'MEMBER' ||
-        github.event.comment.author_association == 'COLLABORATOR'
-      )
+  debug:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
-
-      - name: Extract version from PR title
-        id: version
+      - name: Debug event
         run: |
-            title="${{ github.event.pull_request.title }}"
-            version=$(echo "$title" | grep -oP '\d+\.\d+\.\d+')
-            if [ -z "$version" ]; then
-              echo "❌ Version not found in PR title"
-              exit 1
-            fi
-            echo "version=$version" >> $GITHUB_OUTPUT
-        
+          echo "Event name: ${{ github.event_name }}"
+          echo "Comment body: ${{ github.event.comment.body }}"
+          echo "Issue has PR: ${{ github.event.issue.pull_request != null }}"
+          echo "Author association: ${{ github.event.comment.author_association }}"
+          echo "Contains changelog: ${{ contains(github.event.comment.body, '/changelog') }}"
 
-      - name: Setup git-chglog
-        run: |
-          CHGLOG_VERSION="0.15.4"
-          curl -sSL "https://github.com/git-chglog/git-chglog/releases/download/v${CHGLOG_VERSION}/git-chglog_${CHGLOG_VERSION}_linux_amd64.tar.gz" | tar -xz
-          chmod +x git-chglog
-
-      - name: Generate CHANGELOG.md
-        id: generate
-        run: |
-          ./git-chglog --next-tag ${{ steps.version.outputs.version }} -o CHANGELOG.md
-          if git diff --quiet CHANGELOG.md; then
-            echo "changes=false" >> $GITHUB_OUTPUT
-          else
-            echo "changes=true" >> $GITHUB_OUTPUT
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Cleanup
-        run: rm git-chglog
-        if: always()
-
-      - name: Create Pull Request
-        id: create-pr
-        if: steps.generate.outputs.changes == 'true'
-        uses: peter-evans/create-pull-request@v4
-        with:
-          token: ${{ secrets.GH_PAT }}
-          commit-message: "docs: update CHANGELOG.md"
-          title: "📝 Update Changelog"
-          body: |
-            This PR updates the CHANGELOG.md.
-            - Generated using git-chglog
-            - Triggered by: release PR
-            - Auto-merge enabled
-          branch: update-changelog-${{ github.run_id }}
-          base: ${{ github.event.pull_request.head.ref }}
-          delete-branch: true
-          labels: documentation, automated-pr
-
-      - name: Enable Auto-merge
-        if: steps.generate.outputs.changes == 'true'
-        run: |
-          gh pr merge --auto --squash "${{ steps.create-pr.outputs.pull-request-number }}"
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-
-      - name: Delete changelog branch after merge
-        if: steps.generate.outputs.changes == 'true'
-        run: |
-            branch="update-changelog-${{ github.run_id }}"
-  
-            sleep 5
-  
-            pr_state=$(gh pr view "$branch" --json state --jq '.state')
-
-            if [ "$pr_state" = "MERGED" ]; then
-              echo "✅ PR merged, deleting branch '$branch'"
-              git push origin --delete "$branch"
-            else
-              echo "⚠️ PR state is '$pr_state'. Skipping branch deletion."
-            fi
-        env:
-            GH_TOKEN: ${{ secrets.GH_PAT }}
-
-  update-changelog-review-comment:
+  update-changelog:
     if: |
-      github.event_name == 'pull_request_review_comment' &&
+      github.event.issue.pull_request != null &&
       contains(github.event.comment.body, '/changelog') &&
       (
         github.event.comment.author_association == 'OWNER' ||
