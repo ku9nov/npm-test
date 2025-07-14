@@ -125,14 +125,14 @@ jobs:
             - Triggered by: release PR
             - Auto-merge enabled
           branch: update-changelog-${{ github.run_id }}
-          base: ${{ steps.pr_info.outputs.pr_base_ref }}
+          base: ${{ steps.pr_info.outputs.pr_head_ref }}
           delete-branch: true
           labels: documentation, automated-pr
 
       - name: Enable Auto-merge
         if: steps.generate.outputs.changes == 'true'
         run: |
-          gh pr merge --auto --squash "${{ steps.create-pr.outputs.pull-request-number }}"
+          gh pr merge --auto --squash "${{ github.event.issue.number }}"
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
 
