@@ -122,7 +122,7 @@ jobs:
           body: |
             This PR updates the CHANGELOG.md.
             - Generated using git-chglog
-            - Triggered by: release PR
+            - Triggered by: PR comment
             - Auto-merge enabled
           branch: update-changelog-${{ github.run_id }}
           base: ${{ steps.pr_info.outputs.pr_head_ref }}
@@ -132,7 +132,7 @@ jobs:
       - name: Enable Auto-merge
         if: steps.generate.outputs.changes == 'true'
         run: |
-          gh pr merge --auto --squash "${{ steps.create-pr.outputs.pull-request-number }}"
+          gh pr merge --auto --merge "${{ steps.create-pr.outputs.pull-request-number }}"
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
 

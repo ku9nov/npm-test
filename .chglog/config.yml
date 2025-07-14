@@ -15,10 +15,6 @@ options:
         - style
         - test
         - chore
-      Subject:
-        - "^.*\\[no changelog\\].*$"
-        - "^.*\\[skip changelog\\].*$"
-        - "^.*\\[internal\\].*$"
   commit_groups:
     title_maps:
       feat: Features
