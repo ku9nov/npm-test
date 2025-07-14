@@ -9,11 +9,11 @@ permissions:
   pull-requests: write
 
 jobs:
-    debug:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Debug event
-            run: |
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug event
+        run: |
               echo "Event name: ${{ github.event_name }}"
               echo "Comment body: ${{ github.event.comment.body }}"
               echo "Issue has PR: ${{ github.event.issue.pull_request != null }}"
