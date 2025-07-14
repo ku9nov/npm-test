@@ -23,7 +23,6 @@ jobs:
           echo "PR base ref: ${{ github.event.pull_request.base.ref }}"
           echo "PR labels: ${{ github.event.pull_request.labels }}"
           echo "PR labels names: ${{ join(github.event.pull_request.labels.*.name) }}"
-              
   update-changelog:
     if: |
       github.event.issue.pull_request != null &&
@@ -42,11 +41,13 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Extract version from PR title
+      - name: Extract version from PR comment
         id: version
         run: |
-            title="${{ github.event.pull_request.title }}"
-            version=$(echo "$title" | grep -oP '\d+\.\d+\.\d+')
+            comment="${{ github.event.comment.body }}"
+            version=$(echo "$comment" | grep -oP '/changelog\s+\K[0-9]+\.[0-9]+\.[0-9]+')
+            echo "Comment: $comment"
+            echo "Extracted version: $version"
             if [ -z "$version" ]; then
               echo "❌ Version not found in PR title"
               exit 1
