@@ -1,7 +1,7 @@
 name: "Update Changelog on Release PR"
 
 on:
-  issue_comment:
+  pull_request_review_comment:
     types: [created]
 
 permissions:
@@ -12,7 +12,7 @@ jobs:
   update-changelog:
     if: |
       github.event.issue.pull_request != null &&
-      contains(github.event.comment.body, 'changelog') &&
+      contains(github.event.comment.body, '/changelog') &&
       (
         github.event.comment.author_association == 'OWNER' ||
         github.event.comment.author_association == 'MEMBER' ||
@@ -21,86 +21,84 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
-
-      - name: Extract version from comment
-        id: extract
-        run: |
-            comment="${{ github.event.comment.body }}"
-            version=$(echo "$comment" | grep -oP 'changelog\s+\K[0-9]+\.[0-9]+\.[0-9]+')
-            echo "Comment: $comment"
-            echo "Extracted version: $version"
-            if [ -z "$version" ]; then
-              echo "❌ No version found in comment"
-              exit 1
-            fi
-            echo "version=$version" >> $GITHUB_OUTPUT
-        
-
-      - name: Setup git-chglog
-        run: |
-          CHGLOG_VERSION="0.15.4"
-          curl -sSL "https://github.com/git-chglog/git-chglog/releases/download/v${CHGLOG_VERSION}/git-chglog_${CHGLOG_VERSION}_linux_amd64.tar.gz" | tar -xz
-          chmod +x git-chglog
-
-      - name: Generate CHANGELOG.md
-        id: generate
-        run: |
-          ./git-chglog --next-tag ${{ steps.version.outputs.version }} -o CHANGELOG.md
-          if git diff --quiet CHANGELOG.md; then
-            echo "changes=false" >> $GITHUB_OUTPUT
-          else
-            echo "changes=true" >> $GITHUB_OUTPUT
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Cleanup
-        run: rm git-chglog
-        if: always()
-
-      - name: Create Pull Request
-        if: steps.generate.outputs.changes == 'true'
-        uses: peter-evans/create-pull-request@v4
-        with:
-          token: ${{ secrets.GH_PAT }}
-          commit-message: "docs: update CHANGELOG.md"
-          title: "📝 Update Changelog"
-          body: |
-            This PR updates the CHANGELOG.md.
-            - Generated using git-chglog
-            - Triggered by: release PR
-            - Auto-merge enabled
-          branch: update-changelog-${{ github.run_id }}
-          base: ${{ github.event.pull_request.head.ref }}
-          delete-branch: true
-          labels: documentation, automated-pr
-
-      - name: Enable Auto-merge
-        if: steps.generate.outputs.changes == 'true'
-        run: |
-          gh pr merge --auto --squash "${{ steps.create-pr.outputs.pull-request-number }}"
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-
-      - name: Delete changelog branch after merge
-        if: steps.generate.outputs.changes == 'true'
-        run: |
-            branch="update-changelog-${{ github.run_id }}"
+        - name: Checkout code
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+            ref: ${{ github.event.pull_request.head.ref }}
   
-            sleep 5
+        - name: Extract version from PR title
+          id: version
+          run: |
+              title="${{ github.event.pull_request.title }}"
+              version=$(echo "$title" | grep -oP '\d+\.\d+\.\d+')
+              if [ -z "$version" ]; then
+                echo "❌ Version not found in PR title"
+                exit 1
+              fi
+              echo "version=$version" >> $GITHUB_OUTPUT
+          
   
-            pr_state=$(gh pr view "$branch" --json state --jq '.state')
-
-            if [ "$pr_state" = "MERGED" ]; then
-              echo "✅ PR merged, deleting branch '$branch'"
-              git push origin --delete "$branch"
+        - name: Setup git-chglog
+          run: |
+            CHGLOG_VERSION="0.15.4"
+            curl -sSL "https://github.com/git-chglog/git-chglog/releases/download/v${CHGLOG_VERSION}/git-chglog_${CHGLOG_VERSION}_linux_amd64.tar.gz" | tar -xz
+            chmod +x git-chglog
+  
+        - name: Generate CHANGELOG.md
+          id: generate
+          run: |
+            ./git-chglog --next-tag ${{ steps.version.outputs.version }} -o CHANGELOG.md
+            if git diff --quiet CHANGELOG.md; then
+              echo "changes=false" >> $GITHUB_OUTPUT
             else
-              echo "⚠️ PR state is '$pr_state'. Skipping branch deletion."
+              echo "changes=true" >> $GITHUB_OUTPUT
             fi
-        env:
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+        - name: Cleanup
+          run: rm git-chglog
+          if: always()
+  
+        - name: Create Pull Request
+          if: steps.generate.outputs.changes == 'true'
+          uses: peter-evans/create-pull-request@v4
+          with:
+            token: ${{ secrets.GH_PAT }}
+            commit-message: "docs: update CHANGELOG.md"
+            title: "📝 Update Changelog"
+            body: |
+              This PR updates the CHANGELOG.md.
+              - Generated using git-chglog
+              - Triggered by: release PR
+              - Auto-merge enabled
+            branch: update-changelog-${{ github.run_id }}
+            base: ${{ github.event.pull_request.head.ref }}
+            delete-branch: true
+            labels: documentation, automated-pr
+  
+        - name: Enable Auto-merge
+          if: steps.generate.outputs.changes == 'true'
+          run: |
+            gh pr merge --auto --squash "${{ steps.create-pr.outputs.pull-request-number }}"
+          env:
             GH_TOKEN: ${{ secrets.GH_PAT }}
+  
+        - name: Delete changelog branch after merge
+          if: steps.generate.outputs.changes == 'true'
+          run: |
+              branch="update-changelog-${{ github.run_id }}"
+    
+              sleep 5
+    
+              pr_state=$(gh pr view "$branch" --json state --jq '.state')
+  
+              if [ "$pr_state" = "MERGED" ]; then
+                echo "✅ PR merged, deleting branch '$branch'"
+                git push origin --delete "$branch"
+              else
+                echo "⚠️ PR state is '$pr_state'. Skipping branch deletion."
+              fi
+          env:
+              GH_TOKEN: ${{ secrets.GH_PAT }}
