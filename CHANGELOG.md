@@ -2,14 +2,19 @@
 ## [Unreleased]
 
 
-<a name="2.0.0"></a>
-## 2.0.0
+<a name="2.0.1"></a>
+## 2.0.1
 ### Bug Fixes
 - update tests to match refactored code and error messages
 - add validation for negative exponent with zero base
 - add input validation to add function
 
 ### Chores
+- update github workflow
+- update changelog flow
+- update workflow
+- update app version
+- update workflow
 - try skipping
 - change merge to squash
 - next condition try
@@ -58,6 +63,7 @@
 - improve code formatting and consistency
 
 ### Documentation
+- update docs
 - update CHANGELOG.md ([#39](https://github.com/ku9nov/npm-test/issues/39))
 - update CHANGELOG.md ([#38](https://github.com/ku9nov/npm-test/issues/38))
 - update CHANGELOG.md ([#37](https://github.com/ku9nov/npm-test/issues/37))
@@ -109,7 +115,7 @@ New usage: add(1, 2, { validate: true })
 <a name="0.0.2"></a>
 ## 0.0.2
 
-[Unreleased]: https://github.com/ku9nov/npm-test/compare/2.0.0...HEAD
-[2.0.0]: https://github.com/ku9nov/npm-test/compare/0.0.4...2.0.0
+[Unreleased]: https://github.com/ku9nov/npm-test/compare/2.0.1...HEAD
+[2.0.1]: https://github.com/ku9nov/npm-test/compare/0.0.4...2.0.1
 [0.0.4]: https://github.com/ku9nov/npm-test/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/ku9nov/npm-test/compare/0.0.2...0.0.3
