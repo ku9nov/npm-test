@@ -1,9 +1,5 @@
 
 
-> CHANGELOG generator implemented in Go (Golang).
-> _Anytime, anywhere, Write your CHANGELOG._
-
-
     - [Test Installation](#test-installation)
     - [Quick Start](#quick-start)
   - [CLI Usage](#cli-usage)
