@@ -1,7 +1,4 @@
 
-
-    - [Test Installation](#test-installation)
-    - [Quick Start](#quick-start)
   - [CLI Usage](#cli-usage)
     - [`tag query`](#tag-query)
   - [Configuration](#configuration)
