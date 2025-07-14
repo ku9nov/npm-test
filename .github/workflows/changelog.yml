@@ -31,6 +31,8 @@ jobs:
           else
             echo "No PR associated with this issue"
           fi
+        env:
+          GH_TOKEN: ${{ github.token }}
   update-changelog:
     if: |
       github.event.issue.pull_request != null &&
@@ -64,6 +66,8 @@ jobs:
           echo "✅ PR found: $(echo "$PR_INFO" | jq -r '.title')"
           echo "   Base ref: $(echo "$PR_INFO" | jq -r '.base.ref')"
           echo "   Head ref: $(echo "$PR_INFO" | jq -r '.head.ref')"
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Checkout code
         uses: actions/checkout@v4
