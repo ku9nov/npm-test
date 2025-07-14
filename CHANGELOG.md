@@ -2,12 +2,14 @@
 ## [Unreleased]
 
 
-<a name="2.0.2"></a>
-## 2.0.2
+<a name="2.0.3"></a>
+## 2.0.3
 ### Bug Fixes
+- fix something
 - handle edge cases in string reverse function
 
 ### Chores
+- prepare to release
 - add ignore path to tests [internal]
 - update version [internal]
 
@@ -18,6 +20,9 @@
 - update docs
 
 ### Features
+- add new feature
+- just some feat description
+- some description
 - add new mathematical utility functions
 
 ### Performance Improvements
@@ -26,6 +31,9 @@
 ### Tests
 - add comprehensive test suite for mathematical functions
 
+
+<a name="2.0.2"></a>
+## 2.0.2
 
 <a name="2.0.1"></a>
 ## 2.0.1
@@ -142,7 +150,8 @@ New usage: add(1, 2, { validate: true })
 <a name="0.0.2"></a>
 ## 0.0.2
 
-[Unreleased]: https://github.com/ku9nov/npm-test/compare/2.0.2...HEAD
+[Unreleased]: https://github.com/ku9nov/npm-test/compare/2.0.3...HEAD
+[2.0.3]: https://github.com/ku9nov/npm-test/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/ku9nov/npm-test/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/ku9nov/npm-test/compare/0.0.4...2.0.1
 [0.0.4]: https://github.com/ku9nov/npm-test/compare/0.0.3...0.0.4
