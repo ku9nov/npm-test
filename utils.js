@@ -46,6 +46,18 @@ function wordCount(str) {
   return trimmed === '' ? 0 : trimmed.split(/\s+/).length;
 }
 
+/**
+ * Fixed string reverse function to handle edge cases
+ * @param {string} str - The string to reverse
+ * @returns {string} The reversed string
+ */
+function reverseString(str) {
+  if (typeof str !== 'string') {
+    throw new TypeError('Input must be a string');
+  }
+  return str.split('').reverse().join('');
+}
+
 module.exports = {
   capitalize,
   reverse,
