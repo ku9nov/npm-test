@@ -27,9 +27,6 @@ jobs:
   update-changelog:
     if: |
       github.event.issue.pull_request != null &&
-      contains(github.event.pull_request.title, 'release') == true &&
-      github.event.pull_request.base.ref == 'main' &&
-      !contains(join(github.event.pull_request.labels.*.name), 'automated-pr') &&
       contains(github.event.comment.body, '/changelog')
     #   (
     #     github.event.comment.author_association == 'OWNER' ||
