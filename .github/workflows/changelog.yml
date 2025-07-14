@@ -9,20 +9,20 @@ permissions:
   pull-requests: write
 
 jobs:
-    # debug:
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #       - name: Debug event
-    #         run: |
-    #           echo "Event name: ${{ github.event_name }}"
-    #           echo "Comment body: ${{ github.event.comment.body }}"
-    #           echo "Issue has PR: ${{ github.event.issue.pull_request != null }}"
-    #           echo "Author association: ${{ github.event.comment.author_association }}"
-    #           echo "Contains changelog: ${{ contains(github.event.comment.body, '/changelog') }}"
-    #           echo "PR title: ${{ github.event.pull_request.title }}"
-    #           echo "PR base ref: ${{ github.event.pull_request.base.ref }}"
-    #           echo "PR labels: ${{ github.event.pull_request.labels }}"
-    #           echo "PR labels names: ${{ join(github.event.pull_request.labels.*.name) }}"
+    debug:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Debug event
+            run: |
+              echo "Event name: ${{ github.event_name }}"
+              echo "Comment body: ${{ github.event.comment.body }}"
+              echo "Issue has PR: ${{ github.event.issue.pull_request != null }}"
+              echo "Author association: ${{ github.event.comment.author_association }}"
+              echo "Contains changelog: ${{ contains(github.event.comment.body, '/changelog') }}"
+              echo "PR title: ${{ github.event.pull_request.title }}"
+              echo "PR base ref: ${{ github.event.pull_request.base.ref }}"
+              echo "PR labels: ${{ github.event.pull_request.labels }}"
+              echo "PR labels names: ${{ join(github.event.pull_request.labels.*.name) }}"
               
   update-changelog:
     if: |
