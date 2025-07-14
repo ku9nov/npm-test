@@ -746,4 +746,3 @@ See [CHANGELOG.md](./CHANGELOG.md)
 [issues]: https://github.com/git-chglog/git-chglog/issues
 [git-chglog/artwork]: https://github.com/git-chglog/artwork
 [Sprig]: http://masterminds.github.io/sprig
- 

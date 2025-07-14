@@ -2,6 +2,31 @@
 ## [Unreleased]
 
 
+<a name="2.0.2"></a>
+## 2.0.2
+### Bug Fixes
+- handle edge cases in string reverse function
+
+### Chores
+- add ignore path to tests [internal]
+- update version [internal]
+
+### Documentation
+- update CHANGELOG.md ([#49](https://github.com/ku9nov/npm-test/issues/49))
+- add comprehensive documentation for mathematical functions
+- update CHANGELOG.md ([#47](https://github.com/ku9nov/npm-test/issues/47))
+- update docs
+
+### Features
+- add new mathematical utility functions
+
+### Performance Improvements
+- optimize fibonacci function with iterative approach
+
+### Tests
+- add comprehensive test suite for mathematical functions
+
+
 <a name="2.0.1"></a>
 ## 2.0.1
 ### Bug Fixes
@@ -63,7 +88,9 @@
 - improve code formatting and consistency
 
 ### Documentation
-- update docs
+- update docs ([#42](https://github.com/ku9nov/npm-test/issues/42))
+- update CHANGELOG.md ([#44](https://github.com/ku9nov/npm-test/issues/44))
+- update CHANGELOG.md ([#43](https://github.com/ku9nov/npm-test/issues/43))
 - update CHANGELOG.md ([#39](https://github.com/ku9nov/npm-test/issues/39))
 - update CHANGELOG.md ([#38](https://github.com/ku9nov/npm-test/issues/38))
 - update CHANGELOG.md ([#37](https://github.com/ku9nov/npm-test/issues/37))
@@ -115,7 +142,8 @@ New usage: add(1, 2, { validate: true })
 <a name="0.0.2"></a>
 ## 0.0.2
 
-[Unreleased]: https://github.com/ku9nov/npm-test/compare/2.0.1...HEAD
+[Unreleased]: https://github.com/ku9nov/npm-test/compare/2.0.2...HEAD
+[2.0.2]: https://github.com/ku9nov/npm-test/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/ku9nov/npm-test/compare/0.0.4...2.0.1
 [0.0.4]: https://github.com/ku9nov/npm-test/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/ku9nov/npm-test/compare/0.0.2...0.0.3
