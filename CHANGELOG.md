@@ -2,39 +2,19 @@
 ## [Unreleased]
 
 
-<a name="2.0.2"></a>
-## 2.0.2
+<a name="0.0.4"></a>
+## 0.0.4
 ### Bug Fixes
+- fix something
 - handle edge cases in string reverse function
-
-### Chores
-- add ignore path to tests [internal]
-- update version [internal]
-
-### Documentation
-- update CHANGELOG.md ([#49](https://github.com/ku9nov/npm-test/issues/49))
-- add comprehensive documentation for mathematical functions
-- update CHANGELOG.md ([#47](https://github.com/ku9nov/npm-test/issues/47))
-- update docs
-
-### Features
-- add new mathematical utility functions
-
-### Performance Improvements
-- optimize fibonacci function with iterative approach
-
-### Tests
-- add comprehensive test suite for mathematical functions
-
-
-<a name="2.0.1"></a>
-## 2.0.1
-### Bug Fixes
 - update tests to match refactored code and error messages
 - add validation for negative exponent with zero base
 - add input validation to add function
 
 ### Chores
+- prepare to release
+- add ignore path to tests [internal]
+- update version [internal]
 - update github workflow
 - update changelog flow
 - update workflow
@@ -88,9 +68,14 @@
 - improve code formatting and consistency
 
 ### Documentation
+- update CHANGELOG.md
+- update CHANGELOG.md ([#49](https://github.com/ku9nov/npm-test/issues/49))
+- add comprehensive documentation for mathematical functions
+- update CHANGELOG.md ([#47](https://github.com/ku9nov/npm-test/issues/47))
 - update docs ([#42](https://github.com/ku9nov/npm-test/issues/42))
 - update CHANGELOG.md ([#44](https://github.com/ku9nov/npm-test/issues/44))
 - update CHANGELOG.md ([#43](https://github.com/ku9nov/npm-test/issues/43))
+- update docs
 - update CHANGELOG.md ([#39](https://github.com/ku9nov/npm-test/issues/39))
 - update CHANGELOG.md ([#38](https://github.com/ku9nov/npm-test/issues/38))
 - update CHANGELOG.md ([#37](https://github.com/ku9nov/npm-test/issues/37))
@@ -106,6 +91,10 @@
 - add comprehensive README documentation
 
 ### Features
+- add new feature
+- just some feat description
+- some description
+- add new mathematical utility functions
 - improve reverse function with Unicode support
 - add power function for mathematical operations
 - add options parameter to add function
@@ -114,10 +103,12 @@
 - **string:** add string manipulation utilities
 
 ### Performance Improvements
+- optimize fibonacci function with iterative approach
 - optimize wordCount function for better performance
 - optimize formatGreeting with trim() for better performance
 
 ### Tests
+- add comprehensive test suite for mathematical functions
 - add comprehensive tests for string utilities
 - add comprehensive tests for math functions
 - add tests for formatGreeting function
@@ -133,17 +124,12 @@ Old usage: add(1, 2)
 New usage: add(1, 2, { validate: true })
 
 
-<a name="0.0.4"></a>
-## 0.0.4
-
 <a name="0.0.3"></a>
 ## 0.0.3
 
 <a name="0.0.2"></a>
 ## 0.0.2
 
-[Unreleased]: https://github.com/ku9nov/npm-test/compare/2.0.2...HEAD
-[2.0.2]: https://github.com/ku9nov/npm-test/compare/2.0.1...2.0.2
-[2.0.1]: https://github.com/ku9nov/npm-test/compare/0.0.4...2.0.1
+[Unreleased]: https://github.com/ku9nov/npm-test/compare/0.0.4...HEAD
 [0.0.4]: https://github.com/ku9nov/npm-test/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/ku9nov/npm-test/compare/0.0.2...0.0.3
