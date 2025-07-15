@@ -1,6 +1,5 @@
 
 
-[![godoc.org](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](https://godoc.org/github.com/git-chglog/git-chglog)
 [![Actions Status](https://github.com/git-chglog/git-chglog/workflows/tests/badge.svg)](https://github.com/git-chglog/git-chglog/actions)
 [![Coverage Status](https://img.shields.io/coveralls/github/git-chglog/git-chglog.svg?style=flat-square)](https://coveralls.io/github/git-chglog/git-chglog?branch=master)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/git-chglog/git-chglog/blob/master/LICENSE)
