@@ -1,6 +1,4 @@
-# git-chglog
 
-![git-chglog](https://raw.githubusercontent.com/git-chglog/artwork/master/repo-banner%402x.png)
 
 [![godoc.org](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](https://godoc.org/github.com/git-chglog/git-chglog)
 [![Actions Status](https://github.com/git-chglog/git-chglog/workflows/tests/badge.svg)](https://github.com/git-chglog/git-chglog/actions)
