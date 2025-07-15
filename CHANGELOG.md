@@ -2,12 +2,25 @@
 ## [Unreleased]
 
 
+<a name="0.0.6"></a>
+## 0.0.6
+### Bug Fixes
+- fix something important
+
+### Chores
+- add new build flow
+
+### Features
+- add new best feature
+
+
 <a name="0.0.5"></a>
 ## 0.0.5
 ### Bug Fixes
 - best fix in the world
 
 ### Documentation
+- update CHANGELOG.md
 - update CHANGELOG.md
 
 ### Features
@@ -143,7 +156,8 @@ New usage: add(1, 2, { validate: true })
 <a name="0.0.2"></a>
 ## 0.0.2
 
-[Unreleased]: https://github.com/ku9nov/npm-test/compare/0.0.5...HEAD
+[Unreleased]: https://github.com/ku9nov/npm-test/compare/0.0.6...HEAD
+[0.0.6]: https://github.com/ku9nov/npm-test/compare/0.0.5...0.0.6
 [0.0.5]: https://github.com/ku9nov/npm-test/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/ku9nov/npm-test/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/ku9nov/npm-test/compare/0.0.2...0.0.3
