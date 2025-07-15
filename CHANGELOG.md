@@ -2,6 +2,15 @@
 ## [Unreleased]
 
 
+<a name="0.0.5"></a>
+## 0.0.5
+### Bug Fixes
+- best fix in the world
+
+### Features
+- add new feature
+
+
 <a name="0.0.4"></a>
 ## 0.0.4
 ### Bug Fixes
@@ -69,6 +78,7 @@
 
 ### Documentation
 - update CHANGELOG.md
+- update CHANGELOG.md
 - update CHANGELOG.md ([#49](https://github.com/ku9nov/npm-test/issues/49))
 - add comprehensive documentation for mathematical functions
 - update CHANGELOG.md ([#47](https://github.com/ku9nov/npm-test/issues/47))
@@ -130,6 +140,7 @@ New usage: add(1, 2, { validate: true })
 <a name="0.0.2"></a>
 ## 0.0.2
 
-[Unreleased]: https://github.com/ku9nov/npm-test/compare/0.0.4...HEAD
+[Unreleased]: https://github.com/ku9nov/npm-test/compare/0.0.5...HEAD
+[0.0.5]: https://github.com/ku9nov/npm-test/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/ku9nov/npm-test/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/ku9nov/npm-test/compare/0.0.2...0.0.3
