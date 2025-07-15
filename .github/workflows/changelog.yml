@@ -10,6 +10,14 @@ permissions:
 
 jobs:
   debug:
+    if: |
+      github.event.issue.pull_request != null &&
+      contains(github.event.comment.body, '/changelog') &&
+      (
+        github.event.comment.author_association == 'OWNER' ||
+        github.event.comment.author_association == 'MEMBER' ||
+        github.event.comment.author_association == 'COLLABORATOR'
+      )
     runs-on: ubuntu-latest
     steps:
       - name: Debug event
@@ -125,7 +133,7 @@ jobs:
             - Triggered by: PR comment
             - Auto-merge enabled
           branch: update-changelog-${{ github.run_id }}
-          base: ${{ steps.pr_info.outputs.pr_head_ref }}
+          base: ${{ steps.pr_info.outputs.pr_base_ref }}
           delete-branch: true
           labels: documentation, automated-pr
 
