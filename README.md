@@ -1,5 +1,4 @@
 
-[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/git-chglog/git-chglog/blob/master/LICENSE)
 
 > CHANGELOG generator implemented in Go (Golang).
 > _Anytime, anywhere, Write your CHANGELOG._
