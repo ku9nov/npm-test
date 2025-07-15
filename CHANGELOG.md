@@ -7,6 +7,9 @@
 ### Bug Fixes
 - best fix in the world
 
+### Documentation
+- update CHANGELOG.md
+
 ### Features
 - add new feature
 
