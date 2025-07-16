@@ -20,6 +20,7 @@
 - update API documentation
 
 ### Features
+- redesign authentication system BREAKING CHANGE: User authentication now requires 2FA BREAKING CHANGE: Session tokens expire after 1 hour instead of 24 hours
 - add user registration functionality This commit adds a new user registration endpoint that validates email addresses and creates user accounts with encrypted passwords.
 
 ### Performance Improvements
