@@ -11,6 +11,9 @@
 ### Chores
 - more upd
 
+### Documentation
+- rm action status from readme
+
 
 <a name="0.0.7"></a>
 ## 0.0.7
