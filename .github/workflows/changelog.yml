@@ -134,6 +134,7 @@ jobs:
             - Auto-merge enabled
           branch: update-changelog-${{ github.run_id }}
           base: ${{ steps.pr_info.outputs.pr_head_ref }}
+          path: .
           delete-branch: true
           labels: documentation, automated-pr
 
