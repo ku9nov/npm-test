@@ -5,7 +5,11 @@
 <a name="0.0.8"></a>
 ## 0.0.8
 ### Bug Fixes
+- wow fix
 - rm part of readme
+
+### Chores
+- more upd
 
 
 <a name="0.0.7"></a>
