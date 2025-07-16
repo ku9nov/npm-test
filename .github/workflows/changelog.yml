@@ -133,7 +133,7 @@ jobs:
             - Triggered by: PR comment
             - Auto-merge enabled
           branch: update-changelog-${{ github.run_id }}
-          base: ${{ steps.pr_info.outputs.pr_base_ref }}
+          base: ${{ steps.pr_info.outputs.pr_head_ref }}
           delete-branch: true
           labels: documentation, automated-pr
 
