@@ -1,13 +1,5 @@
 
 
-## Table of Contents
-
-- [git-chglog](#git-chglog)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [How it works](#how-it-works)
-  - [Getting Started](#getting-started)
-    - [Installation](#installation)
       - [Homebrew (for macOS users)](#homebrew-for-macos-users)
       - [Scoop (for Windows users)](#scoop-for-windows-users)
       - [asdf](#asdf)
