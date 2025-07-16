@@ -1,13 +1,4 @@
 
-    - [`info`](#info)
-    - [`options`](#options)
-      - [`options.sort`](#optionssort)
-      - [`options.commits`](#optionscommits)
-      - [`options.commit_groups`](#optionscommit_groups)
-      - [`options.header`](#optionsheader)
-      - [`options.issues`](#optionsissues)
-      - [`options.refs`](#optionsrefs)
-      - [`options.merges`](#optionsmerges)
       - [`options.reverts`](#optionsreverts)
       - [`options.notes`](#optionsnotes)
   - [Templates](#templates)
