@@ -2,6 +2,33 @@
 ## [Unreleased]
 
 
+<a name="0.0.9"></a>
+## 0.0.9
+### Bug Fixes
+- resolve login validation issue
+
+### Chores
+- update dependencies
+
+### Code Refactoring
+- extract validation logic
+
+### Code Style
+- fix indentation in utils.js
+
+### Documentation
+- update API documentation
+
+### Features
+- add user registration functionality This commit adds a new user registration endpoint that validates email addresses and creates user accounts with encrypted passwords.
+
+### Performance Improvements
+- optimize database queries
+
+### Tests
+- add unit tests for auth module
+
+
 <a name="0.0.8"></a>
 ## 0.0.8
 ### Bug Fixes
@@ -170,7 +197,8 @@ New usage: add(1, 2, { validate: true })
 <a name="0.0.2"></a>
 ## 0.0.2
 
-[Unreleased]: https://github.com/ku9nov/npm-test/compare/0.0.8...HEAD
+[Unreleased]: https://github.com/ku9nov/npm-test/compare/0.0.9...HEAD
+[0.0.9]: https://github.com/ku9nov/npm-test/compare/0.0.8...0.0.9
 [0.0.8]: https://github.com/ku9nov/npm-test/compare/0.0.7...0.0.8
 [0.0.7]: https://github.com/ku9nov/npm-test/compare/0.0.5...0.0.7
 [0.0.5]: https://github.com/ku9nov/npm-test/compare/0.0.4...0.0.5
