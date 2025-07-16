@@ -2,6 +2,12 @@
 ## [Unreleased]
 
 
+<a name="0.0.8"></a>
+## 0.0.8
+### Bug Fixes
+- rm part of readme
+
+
 <a name="0.0.7"></a>
 ## 0.0.7
 ### Bug Fixes
@@ -157,7 +163,8 @@ New usage: add(1, 2, { validate: true })
 <a name="0.0.2"></a>
 ## 0.0.2
 
-[Unreleased]: https://github.com/ku9nov/npm-test/compare/0.0.7...HEAD
+[Unreleased]: https://github.com/ku9nov/npm-test/compare/0.0.8...HEAD
+[0.0.8]: https://github.com/ku9nov/npm-test/compare/0.0.7...0.0.8
 [0.0.7]: https://github.com/ku9nov/npm-test/compare/0.0.5...0.0.7
 [0.0.5]: https://github.com/ku9nov/npm-test/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/ku9nov/npm-test/compare/0.0.3...0.0.4
