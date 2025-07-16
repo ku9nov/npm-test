@@ -1,10 +1,4 @@
 
-  - [Development](#development)
-  - [Release Process](#release-process)
-  - [Feedback](#feedback)
-  - [CHANGELOG](#changelog)
-  - [Related Projects](#related-projects)
-  - [License](#license)
 
 ## Features
 
