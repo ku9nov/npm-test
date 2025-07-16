@@ -1,11 +1,4 @@
 
-    - [Quick Start](#quick-start)
-  - [CLI Usage](#cli-usage)
-    - [`tag query`](#tag-query)
-  - [Configuration](#configuration)
-    - [`bin`](#bin)
-    - [`style`](#style)
-    - [`template`](#template)
     - [`info`](#info)
     - [`options`](#options)
       - [`options.sort`](#optionssort)
