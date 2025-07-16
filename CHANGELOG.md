@@ -8,6 +8,9 @@
 - wow fix
 - rm part of readme
 
+### Chores
+- more upd
+
 
 <a name="0.0.7"></a>
 ## 0.0.7

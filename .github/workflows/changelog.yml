@@ -83,6 +83,14 @@ jobs:
           fetch-depth: 0
           ref: ${{ steps.pr_info.outputs.pr_head_ref }}
 
+      - name: Debug current state
+        run: |
+          echo "Current branch: $(git branch --show-current)"
+          echo "Latest commits:"
+          git log --oneline -5
+          echo "Current working directory files:"
+          ls -la
+
       - name: Extract version from PR comment
         id: version
         run: |
@@ -119,29 +127,48 @@ jobs:
         run: rm git-chglog
         if: always()
 
+      - name: Create and push branch
+        if: steps.generate.outputs.changes == 'true'
+        id: create-branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          BRANCH_NAME="update-changelog-${{ github.run_id }}"
+          git checkout -b "$BRANCH_NAME"
+          git add CHANGELOG.md
+          git commit -m "update CHANGELOG.md"
+          git push origin "$BRANCH_NAME"
+          
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+
       - name: Create Pull Request
         if: steps.generate.outputs.changes == 'true'
         id: create-pr
-        uses: peter-evans/create-pull-request@v4
-        with:
-          token: ${{ secrets.GH_PAT }}
-          commit-message: "update CHANGELOG.md"
-          title: "📝 Update Changelog"
-          body: |
-            This PR updates the CHANGELOG.md.
-            - Generated using git-chglog
-            - Triggered by: PR comment
-            - Auto-merge enabled
-          branch: update-changelog-${{ github.run_id }}
-          base: ${{ steps.pr_info.outputs.pr_head_ref }}
-          path: .
-          delete-branch: true
-          labels: documentation, automated-pr
+        run: |
+          BRANCH_NAME="${{ steps.create-branch.outputs.branch_name }}"
+          
+          gh pr create \
+            --title "📝 Update Changelog" \
+            --body "This PR updates the CHANGELOG.md.
+          - Generated using git-chglog
+          - Triggered by: PR comment
+          - Auto-merge enabled" \
+            --base "${{ steps.pr_info.outputs.pr_head_ref }}" \
+            --head "$BRANCH_NAME" \
+            --label "documentation,automated-pr"
+          
+          PR_NUMBER=$(gh pr list --head "$BRANCH_NAME" --json number --jq '.[0].number')
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Enable Auto-merge
         if: steps.generate.outputs.changes == 'true'
         run: |
-          gh pr merge --auto --merge "${{ steps.create-pr.outputs.pull-request-number }}"
+          gh pr merge --auto --merge "${{ steps.create-pr.outputs.pr_number }}"
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
 
