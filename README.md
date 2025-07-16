@@ -1,11 +1,4 @@
 
-
-      - [Homebrew (for macOS users)](#homebrew-for-macos-users)
-      - [Scoop (for Windows users)](#scoop-for-windows-users)
-      - [asdf](#asdf)
-      - [Go users](#go-users)
-    - [Docker](#docker)
-    - [Test Installation](#test-installation)
     - [Quick Start](#quick-start)
   - [CLI Usage](#cli-usage)
     - [`tag query`](#tag-query)
