@@ -2,9 +2,10 @@
 ## [Unreleased]
 
 
-<a name="0.0.6"></a>
-## 0.0.6
+<a name="0.0.7"></a>
+## 0.0.7
 ### Bug Fixes
+- something
 - fix something important
 
 ### Chores
@@ -156,8 +157,8 @@ New usage: add(1, 2, { validate: true })
 <a name="0.0.2"></a>
 ## 0.0.2
 
-[Unreleased]: https://github.com/ku9nov/npm-test/compare/0.0.6...HEAD
-[0.0.6]: https://github.com/ku9nov/npm-test/compare/0.0.5...0.0.6
+[Unreleased]: https://github.com/ku9nov/npm-test/compare/0.0.7...HEAD
+[0.0.7]: https://github.com/ku9nov/npm-test/compare/0.0.5...0.0.7
 [0.0.5]: https://github.com/ku9nov/npm-test/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/ku9nov/npm-test/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/ku9nov/npm-test/compare/0.0.2...0.0.3
